@@ -1,5 +1,5 @@
 {
-	"name": "prep_layer",
+	"name": "DF_prep_layer",
 	"properties": {
 		"folder": {
 			"name": "DF_assessment"
@@ -33,7 +33,7 @@
 				},
 				{
 					"linkedService": {
-						"referenceName": "LS_paste_inputdata",
+						"referenceName": "LS_data_to_DB",
 						"type": "LinkedServiceReference"
 					},
 					"name": "customerSink"
@@ -107,15 +107,18 @@
 				"     errorHandlingOption: 'stopOnFirstError') ~> orderSink",
 				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'delimited',",
-				"     container: 'prep-data',",
-				"     folderPath: 'customers',",
-				"     columnDelimiter: ',',",
-				"     escapeChar: '\\\\',",
-				"     quoteChar: '\\\"',",
-				"     columnNamesAsHeader: false,",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: 'prep',",
+				"     tableName: 'customers',",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     deletable: false,",
+				"     upsertable: false,",
+				"     recreate: true,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> customerSink"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> customerSink"
 			]
 		}
 	}
