@@ -23,9 +23,31 @@
 					"name": "customerSource"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "LS_paste_inputdata",
+						"type": "LinkedServiceReference"
+					},
+					"name": "orderSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn1",
+					"description": "Creating/updating the columns OrderTimestamp"
+				},
+				{
+					"name": "union1"
+				}
+			],
 			"scriptLines": [
+				"parameters{",
+				"     date as string ('9999-99-99 00:00:00.0000000')",
+				"}",
 				"source(output(",
 				"          OrderID as short,",
 				"          ProductID as string,",
@@ -52,7 +74,22 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> customerSource"
+				"     ignoreNoFilesFound: false) ~> customerSource",
+				"orderSource split(isNull(OrderTimestamp),",
+				"     disjoint: false) ~> split1@(TimeStampNulls, notNulls)",
+				"split1@TimeStampNulls derive(OrderTimestamp = iifNull(OrderTimestamp, $date)) ~> derivedColumn1",
+				"derivedColumn1, split1@notNulls union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delimited',",
+				"     container: 'prep-data',",
+				"     folderPath: 'orders',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> orderSink"
 			]
 		}
 	}
