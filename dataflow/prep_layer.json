@@ -26,10 +26,17 @@
 			"sinks": [
 				{
 					"linkedService": {
-						"referenceName": "LS_paste_inputdata",
+						"referenceName": "LS_data_to_DB",
 						"type": "LinkedServiceReference"
 					},
 					"name": "orderSink"
+				},
+				{
+					"linkedService": {
+						"referenceName": "LS_paste_inputdata",
+						"type": "LinkedServiceReference"
+					},
+					"name": "customerSink"
 				}
 			],
 			"transformations": [
@@ -42,6 +49,9 @@
 				},
 				{
 					"name": "union1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -79,17 +89,33 @@
 				"     disjoint: false) ~> split1@(TimeStampNulls, notNulls)",
 				"split1@TimeStampNulls derive(OrderTimestamp = iifNull(OrderTimestamp, $date)) ~> derivedColumn1",
 				"derivedColumn1, split1@notNulls union(byName: true)~> union1",
+				"customerSource derive(LastName = iifNull(LastName,FirstName),",
+				"          Email = iifNull(Email,FirstName)) ~> derivedColumn2",
 				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: 'prep',",
+				"     tableName: 'order',",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     deletable: false,",
+				"     upsertable: false,",
+				"     recreate: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> orderSink",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delimited',",
 				"     container: 'prep-data',",
-				"     folderPath: 'orders',",
+				"     folderPath: 'customers',",
 				"     columnDelimiter: ',',",
 				"     escapeChar: '\\\\',",
 				"     quoteChar: '\\\"',",
 				"     columnNamesAsHeader: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> orderSink"
+				"     skipDuplicateMapOutputs: true) ~> customerSink"
 			]
 		}
 	}
