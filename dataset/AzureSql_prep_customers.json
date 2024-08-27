@@ -1,0 +1,60 @@
+{
+	"name": "AzureSql_prep_customers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_data_to_DB",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_assesment_001"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PhoneNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "State",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ZipCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "prep",
+			"table": "customers"
+		}
+	}
+}

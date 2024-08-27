@@ -1,9 +1,9 @@
 {
-	"name": "PL_data_prep",
+	"name": "PL_data_report",
 	"properties": {
 		"activities": [
 			{
-				"name": "prep_layer",
+				"name": "DF_report_layer",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,11 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF_prep_layer",
-						"type": "DataFlowReference",
-						"parameters": {
-							"date": "'9999-99-99 00:00:00.0000000'"
-						}
+						"referenceName": "DF_report_layer",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

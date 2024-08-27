@@ -1,0 +1,119 @@
+{
+	"name": "DF_report_layer",
+	"properties": {
+		"folder": {
+			"name": "DF_assessment"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSql_prep_order",
+						"type": "DatasetReference"
+					},
+					"name": "orderSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_prep_customers",
+						"type": "DatasetReference"
+					},
+					"name": "customerSource"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "LS_data_to_DB",
+						"type": "LinkedServiceReference"
+					},
+					"name": "reportSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as short,",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Quantity as short,",
+				"          OrderTimestamp as string,",
+				"          Price as double,",
+				"          CustomerID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> orderSource",
+				"source(output(",
+				"          CustomerID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          Address as string,",
+				"          City as string,",
+				"          State as string,",
+				"          ZipCode as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> customerSource",
+				"orderSource, select1 join(orderSource@CustomerID == select1@CustomerID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"customerSource select(mapColumn(",
+				"          CustomerID,",
+				"          FirstName,",
+				"          Email,",
+				"          PhoneNumber",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"join1 select(mapColumn(",
+				"          OrderID,",
+				"          ProductID,",
+				"          ProductName,",
+				"          Quantity,",
+				"          OrderTimestamp,",
+				"          Price,",
+				"          CustomerID = orderSource@CustomerID,",
+				"          FirstName,",
+				"          Email,",
+				"          PhoneNumber",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: 'report',",
+				"     tableName: 'reporting_table',",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     deletable: false,",
+				"     upsertable: false,",
+				"     recreate: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> reportSink"
+			]
+		}
+	}
+}

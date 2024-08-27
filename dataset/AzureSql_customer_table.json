@@ -12,8 +12,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "raw",
-			"table": "customers"
+			"schema": "report",
+			"table": "final"
 		}
 	}
 }

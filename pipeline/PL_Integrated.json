@@ -1,0 +1,100 @@
+{
+	"name": "PL_Integrated",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL for files seperation",
+				"description": "PL for seperating input files into order and customer.",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_append_files",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL for storing data into DB",
+				"description": "PL for storing data into DB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL for files seperation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_uploadfiles_to_DB",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL for prep activity",
+				"description": "PL for data preparation and storing into prep layer",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL for storing data into DB",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_data_prep",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL for reporting",
+				"description": "PL for storing data into report layer.",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL for prep activity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_data_report",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "PL_assessment_001/PL_integrated"
+		},
+		"annotations": []
+	}
+}
