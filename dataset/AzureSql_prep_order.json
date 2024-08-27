@@ -1,0 +1,19 @@
+{
+	"name": "AzureSql_prep_order",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_data_to_DB",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_assesment_001"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "prep",
+			"table": "order"
+		}
+	}
+}
