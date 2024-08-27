@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfpractice-001"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"LS_csv_inputfolder_connectionString": {
+			"value": ""
+		},
+		"LS_csv_output_connectionString": {
+			"value": ""
+		},
+		"LS_ordertoDB_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "server-001.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "DB_practice"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "SqlAzureAdmin"
+		},
+		"LS_ordertoDB_properties_typeProperties_server": {
+			"value": "server-001.database.windows.net"
+		},
+		"LS_ordertoDB_properties_typeProperties_database": {
+			"value": "DB_practice"
+		},
+		"LS_ordertoDB_properties_typeProperties_userName": {
+			"value": "SqlAzureAdmin"
+		}
+	}
+}
