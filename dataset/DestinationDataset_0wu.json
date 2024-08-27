@@ -5,6 +5,9 @@
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DS_practice"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],

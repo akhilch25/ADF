@@ -1,6 +1,9 @@
 {
 	"name": "DF_orderDetails_toDB",
 	"properties": {
+		"folder": {
+			"name": "DF_practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

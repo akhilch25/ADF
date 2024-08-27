@@ -1,20 +1,19 @@
 {
-	"name": "AzureSqlTable2",
+	"name": "AzureSql_order_table",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_ordertoDB",
+			"referenceName": "LS_data_to_DB",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "DS_practice"
+			"name": "DS_assesment_001"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "order_details"
+			"schema": "raw",
+			"table": "orders"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

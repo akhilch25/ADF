@@ -5,6 +5,9 @@
 			"referenceName": "LS_csv_output",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DS_practice"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

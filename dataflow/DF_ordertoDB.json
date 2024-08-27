@@ -1,6 +1,9 @@
 {
 	"name": "DF_ordertoDB",
 	"properties": {
+		"folder": {
+			"name": "DF_practice"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

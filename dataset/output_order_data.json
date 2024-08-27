@@ -1,19 +1,21 @@
 {
-	"name": "customer_input",
+	"name": "output_order_data",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_csv_inputfolder",
+			"referenceName": "LS_paste_inputdata",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "DS_practice"
+			"name": "DS_assesment_001"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "input-folder"
+				"fileName": "order.xlsx",
+				"folderPath": "order_details",
+				"container": "consolidated-folder"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -21,6 +23,5 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
