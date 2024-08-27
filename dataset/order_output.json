@@ -1,0 +1,25 @@
+{
+	"name": "order_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_csv_output",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "order.xlsx",
+				"folderPath": "Order-Details",
+				"container": "consolidated-container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
